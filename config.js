@@ -28,7 +28,7 @@ var validateSessionSecret = function(config) {
   if (config.sessionSecret === 'MEN') {
     console.log(chalk.red('+ WARNING: sessionSecret should be changed in production!'));
     console.log(chalk.red('  Please add process.env.SESSION_SECRET or your secret to '));
-    console.log(chalk.red('  `config/env/production.js` or `config/env/local.js`'));
+    console.log(chalk.red('  `config/production.js` or `config/local.js`'));
     console.log();
     return false;
   }
@@ -47,10 +47,10 @@ var initGlobalConfigFiles = function(config) {
 
 var initGlobalConfig = function() {
   var env = process.env.NODE_ENV;
-  var defaultConfig = require(path.join(process.cwd(), 'config/env/default'));
-  var environmentConfig = require(path.join(process.cwd(), 'config/env/', env)) || {};
+  var defaultConfig = require(path.join(process.cwd(), 'config/default'));
+  var environmentConfig = require(path.join(process.cwd(), 'config/', env)) || {};
   var config = _.merge(defaultConfig, environmentConfig);
-  var localConfig = path.join(process.cwd(), 'config/env/local-' + env + '.js');
+  var localConfig = path.join(process.cwd(), 'config/local.js');
 
   if (fs.existsSync(localConfig)) {
     config = _.merge(config, require(localConfig) || {});
