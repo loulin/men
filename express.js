@@ -12,7 +12,6 @@ var methodOverride = require('method-override');
 var cookieParser = require('cookie-parser');
 var helmet = require('helmet');
 var flash = require('connect-flash');
-var path = require('path');
 
 module.exports.initLocalVariables = function(app) {
   app.locals = config.app;

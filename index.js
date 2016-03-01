@@ -19,6 +19,7 @@ module.exports.start = function() {
   db.connect();
   db.loadModels();
 
+  this.loadServices();
   this.initRoutes(app);
   this.initErrorRoutes(app);
 

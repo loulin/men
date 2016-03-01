@@ -13,6 +13,7 @@ Heavily inspired by (copied/extracted from) [MEAN.JS](http://expressjs.com/)
     │   └── local.js               # local config
     ├── modules
     │   ├── user                   # user module example
+    │   │   ├── model.js           # user model definition
     │   │   ├── route.js           # express route for user
     │   │   ├── controller.js      # user controller
     │   │   └── service.js         # user service
