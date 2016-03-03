@@ -1,6 +1,6 @@
 {
   "name": "men",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Module based Express framework by Node.js",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,10 @@
     "Express",
     "Node.js"
   ],
-  "author": "Lou, Lin (lin.lou@hotmail.com)",
+  "author": {
+    "name": "Lou, Lin",
+    "url": "lin.lou@hotmail.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/loulin/men/issues"

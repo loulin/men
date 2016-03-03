@@ -12,6 +12,7 @@ var methodOverride = require('method-override');
 var cookieParser = require('cookie-parser');
 var helmet = require('helmet');
 var flash = require('connect-flash');
+var path = require('path');
 
 module.exports.initLocalVariables = function(app) {
   app.locals = config.app;
@@ -56,7 +57,7 @@ module.exports.initMiddleware = function(app) {
   }));
   app.use(bodyParser.json());
   app.use(methodOverride());
-
+  app.use(express.static(path.resolve('public')));
   app.use(cookieParser());
   app.use(flash());
 };
@@ -86,8 +87,8 @@ module.exports.initHelmetHeaders = function(app) {
   app.disable('x-powered-by');
 };
 
-module.exports.initExpress = function() {
-  var app = express();
+module.exports.initExpress = function(server) {
+  var app = server || express();
 
   this.initLocalVariables(app);
 

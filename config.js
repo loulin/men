@@ -47,13 +47,18 @@ var initGlobalConfigFiles = function(config) {
 
 var initGlobalConfig = function() {
   var env = process.env.NODE_ENV;
-  var defaultConfig = require(path.join(process.cwd(), 'config/default'));
-  var environmentConfig = require(path.join(process.cwd(), 'config/', env)) || {};
-  var config = _.merge(defaultConfig, environmentConfig);
-  var localConfig = path.join(process.cwd(), 'config/local.js');
+  var config = {};
+  var defaultConfig = path.join(process.cwd(), 'config/default');
+  var localConfig = path.join(process.cwd(), 'config/local');
+
+  if (fs.existsSync(defaultConfig)) {
+    config = _.merge(config, require(defaultConfig));
+  }
+
+  _.merge(config, require(path.join(process.cwd(), 'config/', env)));
 
   if (fs.existsSync(localConfig)) {
-    config = _.merge(config, require(localConfig) || {});
+    config = _.merge(config, require(localConfig));
   }
 
   config.package = require(path.join(process.cwd(), 'package.json'));

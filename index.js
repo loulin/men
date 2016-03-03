@@ -12,12 +12,20 @@ module.exports = men;
 
 _.assign(men, express);
 
-module.exports.start = function() {
-  var app = this.initExpress();
-  var db = config.postgres ? require('./sequelize') : require('./mongoose');
+module.exports.start = function(server) {
+  var app = this.initExpress(server);
+  var db;
 
-  db.connect();
-  db.loadModels();
+  if (config.postgres) {
+    db = require('./sequelize');
+  } else if (config.mongo) {
+    db = require('./mongoose');
+  }
+
+  if (db) {
+    db.connect();
+    db.loadModels();
+  }
 
   this.loadServices();
   this.initRoutes(app);
