@@ -40,6 +40,8 @@ module.exports.initMiddleware = function(app) {
     level: 9
   }));
 
+  app.use(express.static(path.resolve('public')));
+
   if (app.locals.favicon) {
     app.use(favicon(app.locals.favicon));
   }
