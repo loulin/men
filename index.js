@@ -5,15 +5,14 @@ var config = require('./config');
 var express = require('./express');
 var men = {
   config: config,
-  services: {}
+  services: {},
+  express: express
 };
 
 module.exports = men;
 
-_.assign(men, express);
-
 module.exports.start = function(server) {
-  var app = this.initExpress(server);
+  var app = this.express.initExpress(server);
   var db;
 
   if (config.postgres) {
@@ -71,16 +70,16 @@ module.exports.initErrorRoutes = function(app) {
     var statusCode;
     var output = {};
 
-    if (Number.isInteger(err)) {
+    if (_.isInteger(err)) {
       statusCode = err;
-    } else if (typeof err === 'string') {
+    } else if (_.isString(err)) {
       statusCode = 400;
       output.message = err;
     } else {
       statusCode = err.status || 500;
       output.message = err.message;
 
-      if (err instanceof Error) {
+      if (_.isError(err)) {
         console.error(err.stack);
 
         if (app.get('env') === 'production') {

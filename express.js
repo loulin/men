@@ -1,11 +1,9 @@
 'use strict';
 
-var config = require('./config');
 var express = require('express');
-var morgan = require('morgan');
-var logger = require('./logger');
-var bodyParser = require('body-parser');
 var session = require('express-session');
+var morgan = require('morgan');
+var bodyParser = require('body-parser');
 var favicon = require('serve-favicon');
 var compress = require('compression');
 var methodOverride = require('method-override');
@@ -13,6 +11,8 @@ var cookieParser = require('cookie-parser');
 var helmet = require('helmet');
 var flash = require('connect-flash');
 var path = require('path');
+var config = require('./config');
+var logger = require('./logger');
 
 module.exports.initLocalVariables = function(app) {
   app.locals = config.app;
@@ -71,7 +71,7 @@ module.exports.initViewEngine = function(app) {
 
 module.exports.initSession = function(app) {
   if (config.session) {
-    app.use(session(config.session));
+    app.use(session(config.session.options));
   }
 };
 

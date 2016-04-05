@@ -1,6 +1,6 @@
 {
   "name": "men",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Module based Express framework by Node.js",
   "main": "index.js",
   "scripts": {
