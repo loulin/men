@@ -5,8 +5,8 @@ var Sequelize = require('sequelize');
 var config = require('./config');
 
 module.exports.connect = function(callback) {
-  var postgres = config.postgres;
-  var sequelize = new Sequelize(postgres.database, postgres.username, postgres.password, postgres);
+  var dialect = config.sequelize;
+  var sequelize = new Sequelize(dialect.database, dialect.username, dialect.password, dialect);
 
   // bind sequelize instance to Sequelize Class
   Sequelize.sequelize = sequelize;

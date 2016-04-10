@@ -15,7 +15,9 @@ module.exports.start = function(server) {
   var app = this.express.initExpress(server);
   var db;
 
-  if (config.postgres) {
+  if (config.sequelize) {
+    db = require('./sequelize');
+  } else if (config.postgres) { // will be removed
     db = require('./sequelize');
   } else if (config.mongo) {
     db = require('./mongoose');
