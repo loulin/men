@@ -17,9 +17,7 @@ module.exports.start = function(server) {
 
   if (config.sequelize) {
     db = require('./sequelize');
-  } else if (config.postgres) { // will be removed
-    db = require('./sequelize');
-  } else if (config.mongo) {
+  } else if (config.mongoose) {
     db = require('./mongoose');
   }
 
@@ -99,6 +97,11 @@ module.exports.initErrorRoutes = function(app) {
     }
 
     output.status = statusCode;
+
+    if (!config.express.view) {
+      return res.json(output);
+    }
+
     return res.render('error', {
       error: output
     });

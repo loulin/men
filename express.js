@@ -1,7 +1,6 @@
 'use strict';
 
 var express = require('express');
-var session = require('express-session');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var favicon = require('serve-favicon');
@@ -65,27 +64,24 @@ module.exports.initMiddleware = function(app) {
 };
 
 module.exports.initViewEngine = function(app) {
-  app.set('view engine', 'ejs');
-  app.set('views', './views');
+  if (config.express.view) {
+    app.set('view engine', config.express.view.engine);
+    app.set('views', config.express.view.path);
+  }
 };
 
 module.exports.initSession = function(app) {
-  if (config.session) {
-    app.use(session(config.session.options));
+  if (config.express.session) {
+    app.use(require('./session'));
   }
 };
 
 module.exports.initHelmetHeaders = function(app) {
-  var SIX_MONTHS = 15778476000;
   app.use(helmet.xframe());
   app.use(helmet.xssFilter());
   app.use(helmet.nosniff());
   app.use(helmet.ienoopen());
-  app.use(helmet.hsts({
-    maxAge: SIX_MONTHS,
-    includeSubdomains: true,
-    force: true
-  }));
+  app.use(helmet.hsts(config.express.helmet.hsts));
   app.disable('x-powered-by');
 };
 

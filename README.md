@@ -32,30 +32,7 @@ men.start();
 
 ## Configuration
 
-All config entries are optional.
-
-```js
-module.exports = {
-  app: {
-    port: '3002'
-  },
-  postgres: {
-    username: 'pg',
-    password: '123456',
-    database: 'pg',
-    host: '127.0.0.1',
-    dialect: 'postgres',
-    logging: console.log
-  },
-  session: {
-    options: {
-      saveUninitialized: false,
-      resave: true,
-      secret: 'DO5egUpsIlsHkAsfoIG'
-    }
-  }
-};
-```
+All config entries are optional. See [config.example.js](https://github.com/loulin/men/blob/master/config.example.js)
 
 For postgres, sequelize instance and models are bound to Sequelize as Sequelize.sequelize and Sequelize.models.
 

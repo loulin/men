@@ -10,7 +10,7 @@ var path = require('path');
 var validFormats = ['combined', 'common', 'dev', 'short', 'tiny'];
 
 function getLogFormat() {
-  var format = config.log && config.log.format ? config.log.format : 'combined';
+  var format = config.log && config.log.format || 'combined';
 
   if (!_.includes(validFormats, format)) {
     format = 'combined';
