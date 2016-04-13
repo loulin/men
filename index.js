@@ -12,23 +12,24 @@ var men = {
 module.exports = men;
 
 module.exports.start = function(server) {
-  var app = this.express.initExpress(server);
+  var app = men.express.initExpress(server);
   var db;
 
   if (config.sequelize) {
     db = require('./sequelize');
-  } else if (config.mongoose) {
+    men.sequelize = db.connect();
+    men.models = db.loadModels();
+  }
+
+  if (config.mongoose) {
     db = require('./mongoose');
+    men.mongoose = db.connect();
+    men.models = db.loadModels();
   }
 
-  if (db) {
-    db.connect();
-    db.loadModels();
-  }
-
-  this.loadServices();
-  this.initRoutes(app);
-  this.initErrorRoutes(app);
+  men.loadServices();
+  men.initRoutes(app);
+  men.initErrorRoutes(app);
 
   app.listen(config.app.port, config.app.host, function() {
     console.log('--------------------------------------------');

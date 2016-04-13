@@ -37,4 +37,6 @@ module.exports.loadModels = function(callback) {
   });
 
   if (callback) callback();
+
+  return models;
 };

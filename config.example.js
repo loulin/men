@@ -13,6 +13,14 @@ module.exports = {
     dialect: 'postgres',
     logging: console.log
   },
+  mongoose: {
+    uri: process.env.MONGODB_URL || 'mongodb://localhost/men',
+    options: {
+      user: '',
+      pass: ''
+    },
+    debug: process.env.MONGODB_DEBUG || false
+  },
   express: {
     session: {
       store: {

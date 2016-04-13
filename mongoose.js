@@ -6,12 +6,12 @@ var path = require('path');
 var mongoose = require('mongoose');
 
 module.exports.connect = function(callback) {
-  var db = mongoose.connect(config.mongo.uri, config.mongo.options, function(err) {
+  var db = mongoose.connect(config.mongoose.uri, config.mongoose.options, function(err) {
     if (err) {
       console.error(chalk.red('Could not connect to MongoDB!'));
       console.error(err);
     } else {
-      mongoose.set('debug', config.mongo.debug);
+      mongoose.set('debug', config.mongoose.debug);
     }
 
     if (callback) {
@@ -30,9 +30,17 @@ module.exports.disconnect = function(callback) {
 };
 
 module.exports.loadModels = function(callback) {
+  var models = {};
+
   config.files.models.forEach(function(modelPath) {
-    require(path.resolve(modelPath));
+    var model = require(path.resolve(modelPath));
+
+    if (model && model.modelName) {
+      models[model.modelName] = model;
+    }
   });
 
   if (callback) callback();
+
+  return models;
 };
