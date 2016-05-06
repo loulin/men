@@ -1,5 +1,6 @@
 var path = require('path');
 var _ = require('lodash');
+var Promise = require('bluebird');
 var chalk = require('chalk');
 var config = require('./config');
 var express = require('./express');
@@ -11,23 +12,32 @@ var men = {
 
 module.exports = men;
 
-module.exports.start = function(server) {
-  var app = men.express.initExpress(server);
+module.exports.initDatabase = function() {
   var db;
+  var promise;
 
   if (config.sequelize) {
     db = require('./sequelize');
     men.sequelize = db.connect();
     men.models = db.loadModels();
+    promise = men.sequelize.sync();
   }
 
   if (config.mongoose) {
     db = require('./mongoose');
     men.mongoose = db.connect();
     men.models = db.loadModels();
+    promise = Promise.resolve();
   }
 
-  men.loadServices();
+  return promise.then(function() {
+    men.loadServices();
+  });
+};
+
+module.exports.initServer = function(server) {
+  var app = men.express.initExpress(server);
+
   men.initRoutes(app);
   men.initErrorRoutes(app);
 
@@ -36,6 +46,11 @@ module.exports.start = function(server) {
     console.log(chalk.green(JSON.stringify(config.app, null, ' ')));
     console.log('--------------------------------------------');
   });
+};
+
+module.exports.start = function(server) {
+  men.initDatabase();
+  men.initServer(server);
 };
 
 module.exports.initPolicies = function() {

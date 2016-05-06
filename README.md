@@ -44,11 +44,11 @@ men.express.initSession = function(app) {
   var session = require('express-session');
   var MongoStore = require('connect-mongo/es5')(session);
 
-  men.config.session.store = new MongoStore({
-    url: men.config.session.store.url,
+  men.config.express.session.store = new MongoStore({
+    url: men.config.express.session.store.url,
   });
 
-  app.use(session(men.config.session.options));
+  app.use(session(men.config.express.session.options));
 };
 
 men.start();

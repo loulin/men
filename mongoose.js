@@ -5,6 +5,8 @@ var chalk = require('chalk');
 var path = require('path');
 var mongoose = require('mongoose');
 
+mongoose.Promise = require('bluebird');
+
 module.exports.connect = function(callback) {
   var db = mongoose.connect(config.mongoose.uri, config.mongoose.options, function(err) {
     if (err) {
