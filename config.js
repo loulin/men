@@ -22,7 +22,9 @@ var getGlobbedPaths = function(globPatterns) {
 
 var initGlobalConfigFiles = function(config) {
   config.files = {};
-  config.files.models = getGlobbedPaths('modules/*/model.js');
+  config.files.models = getGlobbedPaths([
+    'modules/*/model.js', 'modules/*/models/*.js'
+  ]);
   config.files.routes = getGlobbedPaths('modules/*/route.js');
   config.files.policies = getGlobbedPaths('modules/*/policie.js');
   config.files.services = getGlobbedPaths('modules/*/service.js');

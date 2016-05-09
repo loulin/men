@@ -38,6 +38,7 @@ module.exports.initDatabase = function() {
 module.exports.initServer = function(server) {
   var app = men.express.initExpress(server);
 
+  men.initMiddleware(app);
   men.initRoutes(app);
   men.initErrorRoutes(app);
 
@@ -68,6 +69,8 @@ module.exports.loadServices = function() {
     require(path.resolve(filePath));
   });
 };
+
+module.exports.initMiddleware = function () {};
 
 module.exports.initRoutes = function(app) {
   config.files.routes.forEach(function(routePath) {
