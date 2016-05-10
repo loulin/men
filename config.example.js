@@ -25,7 +25,9 @@ module.exports = {
     session: {
       store: {
         adapter: 'mongo',
-        url: 'mongodb://localhost/men'
+        options: {
+          url: 'mongodb://localhost/men'
+        }
       },
       options: {
         saveUninitialized: false,

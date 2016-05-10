@@ -72,7 +72,7 @@ module.exports.initViewEngine = function(app) {
 
 module.exports.initSession = function(app) {
   if (config.express.session) {
-    app.use(require('./session'));
+    app.use(require('./session')(app));
   }
 };
 

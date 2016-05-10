@@ -12,7 +12,7 @@ var men = {
 
 module.exports = men;
 
-module.exports.initDatabase = function() {
+module.exports.initModels = function() {
   var db;
   var promise;
 
@@ -50,7 +50,7 @@ module.exports.initServer = function(server) {
 };
 
 module.exports.start = function(server) {
-  men.initDatabase();
+  men.initModels();
   men.initServer(server);
 };
 
@@ -70,7 +70,7 @@ module.exports.loadServices = function() {
   });
 };
 
-module.exports.initMiddleware = function () {};
+module.exports.initMiddleware = function() {};
 
 module.exports.initRoutes = function(app) {
   config.files.routes.forEach(function(routePath) {
