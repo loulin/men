@@ -61,6 +61,11 @@ module.exports.initMiddleware = function(app) {
   app.use(express.static(path.resolve('public')));
   app.use(cookieParser());
   app.use(flash());
+
+  if (config.express.cors) {
+    app.options((require('cors')(config.express.cors)));
+    app.use(require('cors')(config.express.cors));
+  }
 };
 
 module.exports.initViewEngine = function(app) {
