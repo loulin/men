@@ -27,6 +27,9 @@ module.exports = function() {
     case 'mongodb':
       Store = require('connect-mongodb-session')(session);
       break;
+    case 'redis':
+      Store = require('connect-redis')(session);
+      break;
     case 'sequelize':
       if (!storeOptions.db) {
         storeOptions.db = men.sequelize;
