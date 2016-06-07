@@ -1,6 +1,6 @@
 'use strict';
 
-var config = require('./config');
+var config = require('config');
 var chalk = require('chalk');
 var path = require('path');
 var mongoose = require('mongoose');

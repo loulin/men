@@ -2,7 +2,7 @@
 
 var chalk = require('chalk');
 var session = require('express-session');
-var config = require('./config').express.session;
+var config = require('config').express.session;
 var Store;
 
 if (process.env.NODE_ENV === 'production' && config.options.secret === 'MEN') {

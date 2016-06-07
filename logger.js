@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 var _ = require('lodash');
-var config = require('./config');
+var config = require('config');
 var chalk = require('chalk');
 var fileStreamRotator = require('file-stream-rotator');
 var fs = require('fs');

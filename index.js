@@ -1,6 +1,5 @@
 var path = require('path');
 var _ = require('lodash');
-var Promise = require('bluebird');
 var chalk = require('chalk');
 var config = require('./config');
 var express = require('./express');
@@ -27,7 +26,7 @@ module.exports.initModels = function() {
     db = require('./mongoose');
     men.mongoose = db.connect();
     men.models = db.loadModels();
-    promise = Promise.resolve();
+    promise = men.mongoose;
   }
 
   return promise.then(function() {

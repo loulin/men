@@ -2,7 +2,7 @@
 
 var path = require('path');
 var Sequelize = require('sequelize');
-var config = require('./config');
+var config = require('config');
 
 module.exports.connect = function(callback) {
   var dialect = config.sequelize;
@@ -23,8 +23,13 @@ module.exports.loadModels = function(callback) {
   var sequelize = Sequelize.sequelize;
 
   config.files.models.forEach(function(modelPath) {
-    var model = sequelize.import(path.resolve(modelPath));
-    models[model.name] = model;
+    var model;
+    var define = require(path.resolve(modelPath));
+
+    if (typeof define === 'function') {
+      model = sequelize.import(path.resolve(modelPath));
+      models[model.name] = model;
+    }
   });
 
   // bind models to Sequelize Class
