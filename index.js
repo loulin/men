@@ -19,6 +19,7 @@ module.exports.initModels = function() {
     db = require('./sequelize');
     men.sequelize = db.connect();
     men.models = db.loadModels();
+    config.app.sequelize = config.sequelize.host + ':' + config.sequelize.database;
     promise = men.sequelize.sync();
   }
 
@@ -26,11 +27,12 @@ module.exports.initModels = function() {
     db = require('./mongoose');
     men.mongoose = db.connect();
     men.models = db.loadModels();
+    config.app.mongoose = config.mongoose.uri;
     promise = men.mongoose;
   }
 
-  return promise.then(function() {
-    men.loadServices();
+  return promise && promise.then(function() {
+    return men.loadServices();
   });
 };
 

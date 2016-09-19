@@ -7,21 +7,8 @@ var fileStreamRotator = require('file-stream-rotator');
 var fs = require('fs');
 var path = require('path');
 
-var validFormats = ['combined', 'common', 'dev', 'short', 'tiny'];
-
 function getLogFormat() {
-  var format = config.log && config.log.format || 'combined';
-
-  if (!_.includes(validFormats, format)) {
-    format = 'combined';
-
-    console.log();
-    console.log(chalk.yellow('Warning: An invalid format was provided.'));
-    console.log(chalk.yellow('Use the default format of "' + format + '"'));
-    console.log();
-  }
-
-  return format;
+  return config.log && config.log.format || 'combined';
 }
 
 function getLogOptions() {
