@@ -43,7 +43,7 @@ module.exports.initServer = function(server) {
   men.initRoutes(app);
   men.initErrorRoutes(app);
 
-  app.listen(config.app.port, config.app.host, function() {
+  return app.listen(config.app.port, config.app.host, function() {
     console.log('--------------------------------------------');
     console.log(chalk.green(JSON.stringify(config.app, null, ' ')));
     console.log('--------------------------------------------');
