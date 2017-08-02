@@ -82,10 +82,10 @@ module.exports.initSession = function(app) {
 };
 
 module.exports.initHelmetHeaders = function(app) {
-  app.use(helmet.xframe());
+  app.use(helmet.frameguard());
   app.use(helmet.xssFilter());
-  app.use(helmet.nosniff());
-  app.use(helmet.ienoopen());
+  app.use(helmet.noSniff());
+  app.use(helmet.ieNoOpen());
   app.use(helmet.hsts(config.express.helmet.hsts));
   app.disable('x-powered-by');
 };

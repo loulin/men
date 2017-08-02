@@ -4,11 +4,15 @@ var config = require('config');
 var chalk = require('chalk');
 var path = require('path');
 var mongoose = require('mongoose');
+var _ = require('lodash');
 
 mongoose.Promise = require('bluebird');
 
 module.exports.connect = function(callback) {
-  var db = mongoose.connect(config.mongoose.uri, config.mongoose.options, function(err) {
+  var options = _.assign({}, config.mongoose.options, {
+    useMongoClient: true
+  });
+  var db = mongoose.connect(config.mongoose.uri, options, function(err) {
     if (err) {
       console.error(chalk.red('Could not connect to MongoDB!'));
       console.error(err);

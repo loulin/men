@@ -52,7 +52,7 @@ module.exports.initServer = function(server) {
 
 module.exports.start = function(server) {
   men.initModels();
-  men.initServer(server);
+  return men.initServer(server);
 };
 
 module.exports.initPolicies = function() {
