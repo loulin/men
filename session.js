@@ -1,22 +1,20 @@
-'use strict';
+const chalk = require('chalk');
+const session = require('express-session');
+const config = require('./config');
+const { log } = require('./util');
 
-var chalk = require('chalk');
-var session = require('express-session');
-var config = require('config').express.session;
-var Store;
+module.exports = () => {
+  const men = require('./');
+  const sessionConfig = config.express.session || {};
+  let Store;
 
-if (process.env.NODE_ENV === 'production' && config.options.secret === 'MEN') {
-  console.log(chalk.yellow('WARNING: session secret should be changed in production!'));
-}
+  if (process.env.NODE_ENV === 'production' && sessionConfig.options.secret === 'MEN') {
+    log.info(chalk.yellow('WARNING: session secret should be changed in production!'));
+  }
 
-module.exports = function() {
-  var men = require('./');
-  var storeOptions;
+  const storeOptions = sessionConfig.store.options || {};
 
-  config.store = config.store || {};
-  storeOptions = config.store.options || {};
-
-  switch (config.store.adapter) {
+  switch (sessionConfig.store.adapter) {
     case 'mongo':
       if (!storeOptions.mongooseConnection && !storeOptions.url && !storeOptions.db) {
         storeOptions.mongooseConnection = men.mongoose;
@@ -31,9 +29,7 @@ module.exports = function() {
       Store = require('connect-redis')(session);
       break;
     case 'sequelize':
-      if (!storeOptions.db) {
-        storeOptions.db = men.sequelize;
-      }
+      if (!storeOptions.db) storeOptions.db = men.sequelize;
 
       Store = require('connect-session-sequelize')(session.Store);
       break;
@@ -41,9 +37,7 @@ module.exports = function() {
       Store = undefined;
   }
 
-  if (Store) {
-    config.options.store = new Store(storeOptions);
-  }
+  if (Store) sessionConfig.options.store = new Store(storeOptions);
 
-  return session(config.options);
+  return session(sessionConfig.options);
 };

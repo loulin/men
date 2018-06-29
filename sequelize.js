@@ -1,47 +1,43 @@
-'use strict';
+const path = require('path');
+const Sequelize = require('sequelize');
+const config = require('config');
 
-var path = require('path');
-var Sequelize = require('sequelize');
-var config = require('config');
+module.exports = {
+  connect(callback) {
+    const dialect = config.sequelize;
+    const sequelize = new Sequelize(dialect.database, dialect.username, dialect.password, dialect);
 
-module.exports.connect = function(callback) {
-  var dialect = config.sequelize;
-  var sequelize = new Sequelize(dialect.database, dialect.username, dialect.password, dialect);
+    // bind sequelize instance to Sequelize Class
+    Sequelize.sequelize = sequelize;
 
-  // bind sequelize instance to Sequelize Class
-  Sequelize.sequelize = sequelize;
+    if (callback) callback(null, sequelize);
 
-  if (callback) {
-    callback(null, sequelize);
-  }
+    return sequelize;
+  },
 
-  return sequelize;
-};
+  loadModels(callback) {
+    const models = {};
+    const { sequelize } = Sequelize;
 
-module.exports.loadModels = function(callback) {
-  var models = {};
-  var sequelize = Sequelize.sequelize;
+    config.files.models.forEach((modelPath) => {
+      let model;
+      const define = require(path.resolve(modelPath));
 
-  config.files.models.forEach(function(modelPath) {
-    var model;
-    var define = require(path.resolve(modelPath));
+      if (typeof define === 'function') {
+        model = sequelize.import(path.resolve(modelPath));
+        models[model.name] = model;
+      }
+    });
 
-    if (typeof define === 'function') {
-      model = sequelize.import(path.resolve(modelPath));
-      models[model.name] = model;
-    }
-  });
+    // bind models to Sequelize Class
+    Sequelize.models = sequelize.models;
 
-  // bind models to Sequelize Class
-  Sequelize.models = sequelize.models;
+    Object.keys(models).forEach((modelName) => {
+      if (models[modelName].associate) models[modelName].associate(models);
+    });
 
-  Object.keys(models).forEach(function(modelName) {
-    if (models[modelName].associate) {
-      models[modelName].associate(models);
-    }
-  });
+    if (callback) callback(null, models);
 
-  if (callback) callback();
-
-  return models;
+    return models;
+  },
 };
