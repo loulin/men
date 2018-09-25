@@ -11,6 +11,8 @@ const flash = require('connect-flash');
 const path = require('path');
 const config = require('./config');
 
+require('express-async-errors');
+
 const service = {
   initLocalVariables(app) {
     app.locals = config.app;

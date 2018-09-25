@@ -1,6 +1,6 @@
 {
   "name": "men",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Module based Express framework by Node.js",
   "main": "index.js",
   "scripts": {
@@ -37,6 +37,7 @@
     "debug": "^3.1.0",
     "ejs": "^2.3.4",
     "express": "^4.16.3",
+    "express-async-errors": "^3.0.0",
     "glob": "^7.1.1",
     "helmet": "^3.12.1",
     "lodash": "^4.17.10",
