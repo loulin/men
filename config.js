@@ -1,6 +1,5 @@
 const _ = require('lodash');
 const glob = require('glob');
-const path = require('path');
 const config = require('config');
 
 function getGlobbedPaths(globPatterns) {
@@ -30,9 +29,7 @@ function initGlobalConfig() {
   const defaults = _.cloneDeep(require('./config.default'));
 
   _.defaultsDeep(config, defaults);
-  config.package = require(path.join(process.cwd(), 'package.json'));
   config.app.env = env;
-  config.app.name = config.package.name;
 
   initGlobalConfigFiles(config);
 
