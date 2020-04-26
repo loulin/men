@@ -12,7 +12,7 @@ module.exports = {
   helmet: {
     hsts: {
       maxAge: 15778476000, // SIX_MONTHS
-      includeSubdomains: true,
+      includeSubDomains: true,
       force: true,
     },
   },
