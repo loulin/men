@@ -24,7 +24,7 @@ module.exports = {
       const define = require(path.resolve(modelPath));
 
       if (typeof define === 'function' && !define.modelName) {
-        model = sequelize.import(path.resolve(modelPath));
+        model = require(path.resolve(modelPath))(sequelize, Sequelize.DataTypes);
         models[model.name] = model;
       }
     });
